@@ -122,6 +122,18 @@
             </ul>
           </li> 
       <!-- end profile -->
+
+       <!-- Berita -->
+       <li class="nav-item dropdown">
+          <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Berita
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="berita.php">Artikel Kesehatan Hewan</a></li>
+          </ul>
+        </li>
+      <!-- end Berita -->
+      
           <a href="layanan.php" class="nav-item nav-link">Layanan</a>
         </div>
         <div class="border-start ps-4 d-none d-lg-block">
