@@ -109,6 +109,19 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="index.php" class="nav-item nav-link active">Home</a>
+      <!-- profile -->
+           <li class="nav-item dropdown">  
+            <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="profil1.php">Sejarah</a></li>
+              <li><a class="dropdown-item" href="profil2.php">Visi Misi</a></li>
+              <li><a class="dropdown-item" href="profil3.php">Struktur Organisasi</a></li>
+              <li><a class="dropdown-item" href="profil4.php">Dokter</a></li>
+            </ul>
+          </li> 
+      <!-- end profile -->
           <a href="layanan.php" class="nav-item nav-link">Layanan</a>
         </div>
         <div class="border-start ps-4 d-none d-lg-block">
