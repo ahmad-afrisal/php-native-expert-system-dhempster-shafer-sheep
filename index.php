@@ -8,7 +8,7 @@
     <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="frontend/img/goat.png" rel="icon" />
+    <link href="frontend/img/logo_puskeswan.jpg" rel="icon" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -109,7 +109,69 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="index.php" class="nav-item nav-link active">Home</a>
-          <a href="layanan.php" class="nav-item nav-link">Layanan</a>
+      <!-- profile -->
+          <li class="nav-item dropdown">  
+            <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="sejarah.php">Sejarah</a></li>
+              <li><a class="dropdown-item" href="visi_misi.php">Visi Misi</a></li>
+              <li><a class="dropdown-item" href="struktur_organisasi.php">Struktur Organisasi</a></li>
+              <li><a class="dropdown-item" href="dokter.php">Dokter</a></li>
+            </ul>
+          </li> 
+      <!-- end profile -->
+
+      <!-- Berita -->
+          <li class="nav-item dropdown">
+          <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Berita
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="berita.php">Artikel Kesehatan Hewan</a></li>
+          </ul>
+        </li>
+      <!-- end Berita -->
+
+      <!--informasi -->
+        <li class="nav-item dropdown">  
+            <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Informasi
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="profil1.php">Jadwal Dokter</a></li>
+              <li><a class="dropdown-item" href="profil2.php">Jadwal Pelayanan</a></li>
+              <li><a class="dropdown-item" href="profil3.php">Manual Book</a></li>
+              <li><a class="dropdown-item" href="profil4.php">Peraturan Yang Berlaku</a></li>
+            </ul>
+          </li> 
+      <!-- end informasi -->
+
+      <!-- Galeri -->
+          <li class="nav-item dropdown">
+          <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Galeri
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="berita.php">Album Foto</a></li>
+            <li><a class="dropdown-item" href="berita.php">Video Kegiatan</a></li>
+          </ul>
+        </li>
+      <!-- end Galeri -->
+      
+      <!-- fasilitas & layanan-->
+      <li class="nav-item dropdown">
+          <a href="#" class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Layanan
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="fasilitas.php">Fasilitas</a></li>
+            <li><a class="dropdown-item" href="form_layanan.php">Layanan</a></li>
+          </ul>
+        </li>
+      <!-- end fasilitas & layanan -->
+      <a href="layanan.php" class="nav-item nav-link">Data Statistik</a>
         </div>
         <div class="border-start ps-4 d-none d-lg-block">
           <a href="login.php" class="nav-item nav-link">Login</a>
@@ -124,7 +186,7 @@
       <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="w-100" src="frontend/img/carousel-3.jpg" alt="Image" />
+            <img class="w-100 img-fluid"src="frontend/img/carousel-5.jpg" alt="Image" style="max-height: 600px;" />
             <div class="carousel-caption">
               <div class="container">
                 <div class="row justify-content-start">
@@ -144,7 +206,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="w-100" src="frontend/img/carousel-4.jpg" alt="Image" />
+            <img class="w-100 img-fluid" src="frontend/img/carousel-6.jpg" alt="Image"  style="max-height: 600px;"/>
             <div class="carousel-caption">
               <div class="container">
                 <div class="row justify-content-end">
@@ -207,7 +269,7 @@
                 <i class="fa fa-map-marker-alt text-body"></i>
               </div>
               <div class="ms-3">
-                <h6>Alamat Kantor</h6>
+                <h6>Alamat Kantor Puskeswan Banggae</h6>
                 <span
                   >Jalan Lagama, Lingkungan Moloku, Totoli, Kec. Banggae,
                   Majene</span
@@ -219,7 +281,7 @@
                 <i class="fa fa-phone-alt text-body"></i>
               </div>
               <div class="ms-3">
-                <h6>Whatsapp</h6>
+                <h6>Whatsapp Dokter Hewan</h6>
                 <span>+62 852-4280-9779</span>
               </div>
             </div>

@@ -122,9 +122,9 @@
               Profile
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="profil1.php">Sejarah</a></li>
-              <li><a class="dropdown-item" href="profil2.php">Visi Misi</a></li>
-              <li><a class="dropdown-item" href="profil3.php">Struktur Organisasi</a></li>
+              <li><a class="dropdown-item" href="sejarah.php">Sejarah</a></li>
+              <li><a class="dropdown-item" href="visi_misi.php">Visi Misi</a></li>
+              <li><a class="dropdown-item" href="struktur_organisasi.php">Struktur Organisasi</a></li>
               <li><a class="dropdown-item" href="dokter.php">Dokter</a></li>
             </ul>
           </li> 
