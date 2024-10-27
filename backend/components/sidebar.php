@@ -107,13 +107,13 @@
                 </div>
               </li>
               <li class="nav-item <?= ($active == 'penyakit' || $active == 'hitung' || $active == 'gejala' || $active == 'relasi')? 'active submenu' : ''; ?>"> 
-                <a data-bs-toggle="collapse" href="#tables">
+                <a data-bs-toggle="collapse" href="#profil">
                   <!-- <i class="fas fa-table"></i> -->
                   <i class="fas fa-database"></i>
                   <p>Profil</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables">
+                <div class="collapse" id="profil">
                   <ul class="nav nav-collapse">
                     <li class="<?= $active == 'penyakit' ? 'active' : ''; ?>">
                       <a href="../penyakit/index.php">
