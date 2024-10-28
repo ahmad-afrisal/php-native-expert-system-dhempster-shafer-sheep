@@ -115,9 +115,9 @@
                 </a>
                 <div class="collapse" id="profil">
                   <ul class="nav nav-collapse">
-                    <li class="<?= $active == 'penyakit' ? 'active' : ''; ?>">
-                      <a href="../penyakit/index.php">
-                        <span class="sub-item">Penyakit Kambing</span>
+                    <li class="<?= $active == 'berita' ? 'active' : ''; ?>">
+                      <a href="../berita/index.php">
+                        <span class="sub-item">Berita</span>
                       </a>
                     </li>
                     <li class="<?= $active == 'galeri' ? 'active' : ''; ?>">
