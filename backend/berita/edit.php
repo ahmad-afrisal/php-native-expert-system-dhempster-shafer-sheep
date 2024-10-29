@@ -71,19 +71,11 @@
             <div class="row">
               <div class="col-md-12">
                 <?php
-                  $kode_penyakit = $_GET['kode_penyakit'];
-                  $selected_gejala = [];
-
-                  $queryRelasi = mysqli_query($koneksi, "SELECT * FROM tbl_relasi WHERE kode_penyakit='$kode_penyakit'"); 
-                  while ($data = mysqli_fetch_array($queryRelasi)) {
-                    $selected_gejala[] = $data['kode_gejala'];
-                  }
-                  $queryRelasi->close();
-
+                  $id = $_GET['id'];
                   // var_dump($selected_gejala);
 
                   
-                  $query = mysqli_query($koneksi, "SELECT * FROM tbl_penyakit JOIN tbl_relasi ON tbl_penyakit.kode_penyakit=tbl_relasi.kode_penyakit WHERE tbl_penyakit.kode_penyakit='$kode_penyakit'");
+                  $query = mysqli_query($koneksi, "SELECT * FROM tbl_berita  WHERE id='$id'");
                   
                   // var_dump($query);
                   while ($data = mysqli_fetch_array($query)) {
@@ -180,33 +172,10 @@
           </div>
         </div>
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
-          </div>
-        </footer>
+        <?php
+
+          include '../components/footer.php';
+        ?>
       </div>
 
 

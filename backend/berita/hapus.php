@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (isset($_GET['kode_penyakit'])) {
+if (isset($_GET['id'])) {
 
     include '../../includes/koneksi.php'; // Pastikan $koneksi sudah dibuat di file koneksi.php
 
-    $kode_penyakit = $_GET['kode_penyakit'];
+    $id = $_GET['id'];
     $status = 'error';
 
        // Nonaktifkan autocommit untuk mulai transaksi
@@ -13,22 +13,17 @@ if (isset($_GET['kode_penyakit'])) {
 
     try {
         // Hapus data dari tabel relasi
-        $sql_relasi = "DELETE FROM tbl_relasi WHERE kode_penyakit = ?";
-        $stmt_relasi = $koneksi->prepare($sql_relasi);
-        $stmt_relasi->bind_param("s", $kode_penyakit);
-        $stmt_relasi->execute();
+        $sql_berita = "DELETE FROM tbl_berita WHERE id = ?";
+        $stmt = $koneksi->prepare($sql_berita);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
 
-        // Hapus data dari tabel tbl_penyakit
-        $sql_penyakit = "DELETE FROM tbl_penyakit WHERE kode_penyakit = ?";
-        $stmt_penyakit = $koneksi->prepare($sql_penyakit);
-        $stmt_penyakit->bind_param("s", $kode_penyakit);
-        $stmt_penyakit->execute();
 
         // Jika semua berhasil, commit transaksi
         $koneksi->commit();
         
         // Jika berhasil dihapus, tampilkan pesan sukses
-        $_SESSION['flash_message'] = "Penyakit dengan kode $kode_penyakit Berhasil dihapus!";
+        $_SESSION['flash_message'] = "Data Berhasil dihapus!";
         // header('Location: index.php?status=success');
         $status = 'success';
     } catch (Exception $e) {
@@ -38,15 +33,14 @@ if (isset($_GET['kode_penyakit'])) {
         if ($koneksi->errno == 1451) {  // Error 1451 adalah kode untuk foreign key constraint
             $_SESSION['flash_message'] = "Data ini tidak bisa dihapus, karena memiliki hubungan dengan data lain!";
         } else {
-            $_SESSION['flash_message'] = "Gagal menghapus record dengan kode $kode_penyakit!";
+            $_SESSION['flash_message'] = "Gagal menghapus record dengan id $id!";
         }
         $status = 'error';
         
     }
 
     // Tutup statement
-    $stmt_relasi->close();
-    $stmt_penyakit->close();
+    $stmt->close();
 
     // Aktifkan kembali autocommit
     $koneksi->autocommit(TRUE);

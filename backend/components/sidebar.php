@@ -125,9 +125,9 @@
                         <span class="sub-item">Galeri</span>
                       </a>
                     </li>
-                    <li class="<?= $active == 'relasi' ? 'active' : ''; ?>">
-                      <a href="../relasi/index.php">
-                        <span class="sub-item">Aturan Gejala</span>
+                    <li class="<?= $active == 'dokter' ? 'active' : ''; ?>">
+                      <a href="../dokter/index.php">
+                        <span class="sub-item">Dokter</span>
                       </a>
                     </li>
                     <li class="<?= $active == 'hitung' ? 'active' : ''; ?>">
