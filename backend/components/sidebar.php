@@ -120,9 +120,14 @@
                         <span class="sub-item">Berita</span>
                       </a>
                     </li>
-                    <li class="<?= $active == 'galeri' ? 'active' : ''; ?>">
-                      <a href="../galeri/index.php">
-                        <span class="sub-item">Galeri</span>
+                    <li class="<?= $active == 'foto' ? 'active' : ''; ?>">
+                      <a href="../foto/index.php">
+                        <span class="sub-item">Foto</span>
+                      </a>
+                    </li>
+                    <li class="<?= $active == 'video' ? 'active' : ''; ?>">
+                      <a href="../video/index.php">
+                        <span class="sub-item">Video</span>
                       </a>
                     </li>
                     <li class="<?= $active == 'dokter' ? 'active' : ''; ?>">

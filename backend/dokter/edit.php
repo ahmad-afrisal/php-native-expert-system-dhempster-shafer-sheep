@@ -15,30 +15,12 @@
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
-              <a href="#" class="logo">
-                <img
-                  src="../assets/img/kaiadmin/logo_light.svg"
-                  alt="navbar brand"
-                  class="navbar-brand"
-                  height="20"
-                />
-              </a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
-                </button>
-                <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
-                </button>
-              </div>
-              <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
-              </button>
-            </div>
+            <?php
+              include '../components/logo-header.php';
+            ?>
             <!-- End Logo Header -->
           </div>
-           <!-- Navbar Header -->
+          <!-- Navbar Header -->
           <?php
             include '../components/navbar.php';
           ?>
@@ -58,7 +40,7 @@
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Penyakit</a>
+                  <a href="#">Dokter</a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
@@ -75,13 +57,13 @@
                   // var_dump($selected_gejala);
 
                   
-                  $query = mysqli_query($koneksi, "SELECT * FROM tbl_berita  WHERE id='$id'");
+                  $query = mysqli_query($koneksi, "SELECT * FROM tbl_dokter  WHERE id='$id'");
                   
                   // var_dump($query);
                   while ($data = mysqli_fetch_array($query)) {
                   // $selected_gejala = $data['kode_gejala'], true);
                 ?>
-                <form method="POST" action="update.php">
+                <form method="POST" action="update.php" enctype="multipart/form-data">
                   <div class="card">
                     <div class="card-header">
                       <div class="card-title">Form Edit</div>
@@ -89,72 +71,44 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-12">
+                            <input type="hidden" name="id"  value="<?= $data['id']; ?>">
                           <div class="form-group">
-                            <label for="kode_kriteria">Kode Penyakit</label>
+                            <label for="nama_dokter">Nama Dokter</label>
                             <input
                               type="text"
-                              value="<?= $data['kode_penyakit']; ?>"
+                              value="<?= $data['nama_dokter']; ?>"
                               class="form-control"
-                              id="kode_penyakit"
-                              name=""
-                              placeholder="Masukkan Kode Penyakit"
-                              disabled
-                            />
-                            <input type="hidden" name="kode_penyakit"  value="<?= $data['kode_penyakit']; ?>">
-                          </div>
-                          <div class="form-group">
-                            <label for="kode_kriteria">Nama Penyakit</label>
-                            <input
-                              type="text"
-                              value="<?= $data['nama_penyakit']; ?>"
-                              class="form-control"
-                              id="nama_penyakit"
-                              name="nama_penyakit"
-                              placeholder="Masukkan Nama Penyakit"
+                              id="nama_dokter"
+                              name="nama_dokter"
+                              placeholder="Masukkan Nama Dokter"
                               required
                             />
                           </div>
                           <div class="form-group">
-                            <label for="">Keterangan</label>
-                            <textarea class="form-control" id="Keterangan"  name="keterangan" rows="5" required><?= $data['keterangan']; ?></textarea>
+                            <label for="bidang">Bidang</label>
+                            <input
+                              type="text"
+                              value="<?= $data['bidang']; ?>"
+                              class="form-control"
+                              id="bidang"
+                              name="bidang"
+                              placeholder="Masukkan Bidang"
+                              required
+                            />
                           </div>
                           <div class="form-group">
-                            <label for="">Cara Penanganan</label>
-                            <textarea class="form-control" id="pencegahan" name="pencegahan"  rows="7" required><?= $data['pencegahan']; ?></textarea>
-                          </div>
-                          <div class="form-group">
-                            <label for="">Pilih Gejala</label>
-                            <p>Minimal memilih 5 gejala</p>
-                            <div class="row">
-                                <?php
-                              // Mengambil data dari Tabel Penyakit
-                              $query = mysqli_query($koneksi, "SELECT * FROM tbl_gejala");
-                              $index = 0;
-                              while($data = mysqli_fetch_array($query)) {
-                            ?>
-                              <div class="col-6">
-                                <div class="form-check p-1">
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="<?= $data['kode_gejala'] ?>"
-                                    id="flexCheckDefault"
-                                    name="gejala[]"
-                                    <?php echo in_array($data['kode_gejala'], $selected_gejala) ? 'checked' : ''; ?>
-                                  />
-                                  <label
-                                    class="form-check-label"
-                                    for="flexCheckDefault"
-                                  >
-                                    <?= $data['kode_gejala'] ?> - <?= $data['nama_gejala'] ?>
-                                  </label>
-                                </div>
-                                
-                                  </div>
-                              <?php 
-                              }
-                            ?>
-                            </div>
+                            <label for="exampleFormControlFile1"
+                              >Foto</label>
+                              <br>
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              name="foto"
+                              id="exampleFormControlFile1"
+                            />
+                            <br>
+                            <small id="emailHelp2" class="form-text text-muted"
+                            ><a href="../../frontend/img/doctors/<?= $data['foto']; ?>" target="_blank"><?= $data['foto']; ?></a></small>
                           </div>
                       </div>
                     </div>
