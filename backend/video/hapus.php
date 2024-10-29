@@ -1,43 +1,58 @@
 <?php
 session_start();
 
-if (isset($_GET['kode_gejala'])) {
+if (isset($_GET['id'])) {
 
     include '../../includes/koneksi.php'; // Pastikan $koneksi sudah dibuat di file koneksi.php
 
-    $kode_gejala = $_GET['kode_gejala'];
+    $id = $_GET['id'];
+    $status = 'error';
 
-    // Menggunakan prepared statement untuk penghapusan
-    $stmt = $koneksi->prepare("DELETE FROM tbl_gejala WHERE kode_gejala = ?");
-    $stmt->bind_param("s", $kode_gejala);
+       // Nonaktifkan autocommit untuk mulai transaksi
+    $koneksi->autocommit(FALSE);
 
     try {
-        if ($stmt->execute()) {
-            // Jika berhasil dihapus, tampilkan pesan sukses
-            $_SESSION['flash_message'] = "Gejala $kode_gejala Berhasil dihapus!";
-            header('Location: index.php?status=success');
-        }
-    } catch (mysqli_sql_exception $e) {
+        // Hapus data dari tabel relasi
+        $sql = "DELETE FROM tbl_galeri_video WHERE id = ?";
+        $stmt = $koneksi->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+
+
+        // Jika semua berhasil, commit transaksi
+        $koneksi->commit();
+        
+        // Jika berhasil dihapus, tampilkan pesan sukses
+        $_SESSION['flash_message'] = "Data Berhasil dihapus!";
+        // header('Location: index.php?status=success');
+        $status = 'success';
+    } catch (Exception $e) {
+        // Rollback jika ada kesalahan
+        $koneksi->rollback();
         // Jika terjadi error, misalnya foreign key constraint error
-        if ($e->getCode() == 1451) {  // Error 1451 adalah kode untuk foreign key constraint
+        if ($koneksi->errno == 1451) {  // Error 1451 adalah kode untuk foreign key constraint
             $_SESSION['flash_message'] = "Data ini tidak bisa dihapus, karena memiliki hubungan dengan data lain!";
         } else {
-            $_SESSION['flash_message'] = "Gagal menghapus record dengan kode $kode_gejala!";
+            $_SESSION['flash_message'] = "Gagal menghapus record dengan id $id!";
         }
-        header('Location: index.php?status=error');
-        exit(); // Pastikan exit setelah redirect
+        $status = 'error';
+        
     }
 
     // Tutup statement
     $stmt->close();
 
+    // Aktifkan kembali autocommit
+    $koneksi->autocommit(TRUE);
+
     // Tutup koneksi
     $koneksi->close();
 
+    header('Location: index.php?status='.$status.'');
+
 } else {
-    // $_SESSION['flash_message'] = "Failed to delete record!";
-    // header('Location: index.php?status=error');
-    // exit();
+    $_SESSION['flash_message'] = "Data gagal di hapus";
+    header('Location: index.php?status=error');
 }
 
 exit();

@@ -1,7 +1,5 @@
 <?php
   include '../components/header.php';
-
-
 ?>
 
   <body>
@@ -16,27 +14,9 @@
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
-              <a href="../index.html" class="logo">
-                <img
-                  src="../assets/img/kaiadmin/logo_light.svg"
-                  alt="navbar brand"
-                  class="navbar-brand"
-                  height="20"
-                />
-              </a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
-                </button>
-                <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
-                </button>
-              </div>
-              <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
-              </button>
-            </div>
+            <?php
+              include '../components/logo-header.php';
+            ?>
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
@@ -70,9 +50,9 @@
                   <div class="card-header">
                     <div class="d-flex align-items-center">
                       <h4 class="card-title">Video</h4>
-                      <a href="tambah.php"
+                      <a
                         class="btn btn-primary btn-round ms-auto"
-                        
+                        href="tambah.php"
                       >
                         <i class="fa fa-plus"></i>
                         Tambah
@@ -80,7 +60,6 @@
                     </div>
                   </div>
                   <div class="card-body">
-
                     <div class="table-responsive">
                       <table
                         id="add-row"
@@ -88,44 +67,48 @@
                       >
                         <thead>
                           <tr>
-                            <th>NO</th>
+                            <th>ID</th>
+                            <th>COVER</th>
                             <th>JUDUL VIDEO</th>
-                            <th>LINK</th>
+                            <th>LINK VIDEO</th>
                             <th style="width: 10%">AKSI</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                            <th>NO</th>
-                            <th>KODE GEJALA</th>
-                            <th>NAMA GEJALA</th>
+                            <th>ID</th>
+                            <th>COVER</th>
+                            <th>JUDUL VIDEO</th>
+                            <th>LINK VIDEO</th>
                             <th>AKSI</th>
                           </tr>
                         </tfoot>
                         <tbody>
                         <?php
                           // Mengambil data dari Tabel Penyakit
-                          $query = mysqli_query($koneksi, "SELECT * FROM tbl_gejala");
+                          $query = mysqli_query($koneksi, "SELECT * FROM tbl_galeri_video");
                           $no = 1;
                           while($data = mysqli_fetch_array($query)) {
 
                         ?>
                           <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $data["kode_gejala"]; ?></td>
-                            <td><?= $data["nama_gejala"]; ?></td>
+                            <td><?= $data['id']; ?></td>
+                            <td> <img src="../../frontend/img/video/<?= $data["cover"]; ?>" alt="" srcset="" style="max-width: 100px;"> </td>
+                            <td><?= $data["judul_video"]; ?></td>
+                            <td><?= $data["link"]; ?></td>
                             <td>
                               <div class="form-button-action">
                                 <a
-                                  href="edit.php?kode_gejala=<?= $data['kode_gejala']; ?>"
+                                  href="edit.php?id=<?= $data['id']; ?>"
                                   class="btn btn-link btn-primary"
                                   data-original-title="Edit Task"
                                 >
                                   <i class="fa fa-edit"></i>
                                 </a>
                                 <button type="button"
-                                  class="btn btn-link btn-danger delete-btn" id="alert_demo_7" data-id="<?= $data['kode_gejala']; ?>"
-                                
+                                  data-id="<?= $data['id']; ?>"
+                                  class="btn btn-link btn-danger delete-btn"
+                                  data-original-title="Remove"
                                 >
                                   <i class="fa fa-times"></i>
                                 </button>
@@ -146,231 +129,12 @@
           </div>
         </div>
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
-          </div>
-        </footer>
+        <?php
+          include '../components/footer.php';
+        ?>
       </div>
 
-      
 
-      <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
-      <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery-3.7.1.min.js"></script>
@@ -379,8 +143,7 @@
 
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <script src="../../assets/js/plugin/sweetalert/sweetalert.min.js"></script> -->
-    
+
     <!-- jQuery Scrollbar -->
     <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
@@ -428,34 +191,31 @@
         } // Clear flash message after displaying it
       } 
     ?>
-    
+
     <script>
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
+      document.querySelectorAll('.delete-btn').forEach(button => {
+          button.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
 
-                Swal.fire({
-                    title: 'Konfirmasi Hapus?',
-                    text: "Data tidak dapat dikembalikan",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Hapus',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'hapus.php?kode_gejala=' + id;
-                    }
-                })
-            });
-        });
+              Swal.fire({
+                  title: 'Konfirmasi Hapus?',
+                  text: "Data tidak dapat dikembalikan",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Hapus',
+                  cancelButtonText: 'Batal'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.location.href = 'hapus.php?id=' + id;
+                  }
+              })
+          });
+      });
     </script>
-
     <script>
       $(document).ready(function () {
-        
-
         $("#basic-datatables").DataTable({});
 
         $("#multi-filter-select").DataTable({
@@ -511,9 +271,6 @@
         //   $("#addRowModal").modal("hide");
         // });
       });
-
-
-     
     </script>
   </body>
 </html>

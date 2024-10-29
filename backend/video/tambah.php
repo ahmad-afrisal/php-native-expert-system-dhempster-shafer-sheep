@@ -14,27 +14,9 @@
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
-              <a href="#" class="logo">
-                <img
-                  src="../assets/img/kaiadmin/logo_light.svg"
-                  alt="navbar brand"
-                  class="navbar-brand"
-                  height="20"
-                />
-              </a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
-                </button>
-                <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
-                </button>
-              </div>
-              <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
-              </button>
-            </div>
+            <?php
+              include '../components/logo-header.php';
+            ?>
             <!-- End Logo Header -->
           </div>
            <!-- Navbar Header -->
@@ -57,7 +39,7 @@
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Gejala</a>
+                  <a href="#">Video</a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
@@ -69,7 +51,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <form method="POST" action="simpan.php">
+                <form method="POST" action="simpan.php" enctype="multipart/form-data">
                   <div class="card">
                     <div class="card-header">
                       <div class="card-title">Form Tambah</div>
@@ -78,28 +60,40 @@
                       <div class="row">
                         <div class="col-12">
                           <div class="form-group">
-                            <label for="kode_kriteria">Kode Gejala</label>
+                            <label for="judul_vieo">Judul Video</label>
                             <input
                               type="text"
-                              value=""
                               class="form-control"
-                              name="kode_gejala"
-                              placeholder="Masukkan Kode gejala"
+                              id="judul_video"
+                              name="judul_video"
+                              placeholder="Masukkan Judul Video"
                               required
                             />
                           </div>
                           <div class="form-group">
-                            <label for="kode_kriteria">Nama Gejala</label>
+                            <label for="bidang">Link Video Youtube</label>
                             <input
-                              type="text"
+                              type="link"
                               class="form-control"
-                              id="nama_penyakit"
-                              name="nama_gejala"
-                              placeholder="Masukkan Nama gejala"
+                              id="link"
+                              name="link"
+                              placeholder="Masukkan Link Video"
                               required
                             />
                           </div>
-                          
+                          <div class="form-group">
+                            <label for="exampleFormControlFile1"
+                              >Cover</label>
+                              <br>
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              name="foto"
+                              required
+                              id="exampleFormControlFile1"
+                            />
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -114,244 +108,50 @@
           </div>
         </div>
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
-          </div>
-        </footer>
+        <?php
+          include '../components/footer.php';
+        ?>
       </div>
 
-      <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
-      <!-- End Custom template -->
+
     </div>
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap.min.js"></script>
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- jQuery Scrollbar -->
     <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
     <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- <script src="https://cdn.tiny.cloud/1/76vv5yc915yv41487s5xwbqpzas2kbhui8gd6fyk5ptjpezx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Kaiadmin JS -->
     <script src="../../assets/js/kaiadmin.min.js"></script>
+    <script src="../../assets/js/froala_editor.pkgd.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="../../assets/js/setting-demo2.js"></script>
+    <?php
+      if (isset($_SESSION['flash_message'])) {
+          $message = $_SESSION['flash_message'];
+          echo "<script>
+              Swal.fire({
+                  icon: 'warning',
+                  title: 'Gagal Validasi',
+                  text: '$message'
+              });
+          </script>";
+          unset($_SESSION['flash_message']);
+      } 
+    ?>
+    
     <script>
+      var editor = new FroalaEditor('#isi');
+      
+
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
 
@@ -386,6 +186,11 @@
               });
           },
         });
+
+        $('.js-example-basic-multiple').select2({
+                    // theme: 'bootstrap5',
+                    placeholder: "Please Select"
+                });
 
         // Add Row
         $("#add-row").DataTable({
