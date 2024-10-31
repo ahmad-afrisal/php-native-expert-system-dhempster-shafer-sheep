@@ -1,3 +1,19 @@
+<?php
+include 'includes/koneksi.php'; // Menghubungkan ke database
+
+// Query untuk mendapatkan data dari tbl_berita
+$sql = "SELECT judul_berita, slug, penulis, foto, isi, waktu_publish FROM tbl_berita WHERE status = 'aktif' ORDER BY waktu_publish DESC LIMIT 4";
+$result = $koneksi->query($sql);
+
+$berita = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $berita[] = $row;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,8 +62,27 @@
 
 
     <!-- Template Stylesheet -->
-    <link href="frontend/css/style.css" rel="stylesheet" />
     <link href="frontend/css/berita.css" rel="stylesheet">
+    <link href="frontend/css/style.css" rel="stylesheet" />
+    <title>Hero Section</title>
+    <style>
+        .btn-read-more {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 16px;
+            color: white;
+            background-color:#5F7E68; /* Warna hijau tua */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;             /* Kursor pointer */
+            transition: background-color 0.3s ease; /* Efek transisi */#556B2F
+        }
+
+        .btn-read-more:hover {
+            background-color:#556B2F;   /* Warna saat hover */
+        }
+        
+    </style>
   </head>
 
   <body>
@@ -195,45 +230,16 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section">
 
-      <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="hero-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">
 
         <div class="carousel-item active">
           <img src="frontend/img/hero-carousel/hero-carousel-1.jpg" alt="">
           <div class="container">
-            <h2>Welcome to Health Articles</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <a href="#" class="btn-get-started">Read More</a>
+            <h2>Welcome to Animal Health Articles</h2>
+            <p>Temukan berbagai tips dan informasi menarik seputar kesehatan hewan kesayangan Anda. Artikel ini akan membantu Anda memahami lebih dalam tentang berbagai penyakit hewan dan cara pencegahannya.</p>
+            <button class="btn-read-more" onclick="location.href='#featured-services'">Read More</button>
           </div>
         </div><!-- End Carousel Item -->
-
-        <div class="carousel-item">
-          <img src="frontend/img/hero-carousel/hero-carousel-2.jpg" alt="">
-          <div class="container">
-            <h2>At vero eos et accusamus</h2>
-            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut.</p>
-            <a href="#about" class="btn-get-started">Read More</a>
-          </div>
-        </div><!-- End Carousel Item -->
-
-        <div class="carousel-item">
-          <img src="frontend/img/hero-carousel/hero-carousel-3.jpg" alt="">
-          <div class="container">
-            <h2>Temporibus autem quibusdam</h2>
-            <p>Beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt omnis iste natus error sit voluptatem accusantium.</p>
-            <a href="#about" class="btn-get-started">Read More</a>
-          </div>
-        </div><!-- End Carousel Item -->
-
-        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-        </a>
-
-        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-        </a>
-
-        <ol class="carousel-indicators"></ol>
-
       </div>
 
     </section><!-- /Hero Section -->
@@ -241,45 +247,41 @@
     <!-- Featured Services Section -->
     <section id="featured-services" class="featured-services section">
 
-      <div class="container">
+    <div class="container">
+    <div class="row gy-4">
+        <?php foreach ($berita as $item): ?>
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-item position-relative">
 
-        <div class="row gy-4">
+                    <!-- Menampilkan foto berita -->
+                    <?php if (!empty($item['foto'])): ?>
+                        <img src="frontend/img/berita/<?php echo $item['foto']; ?>" alt="Image" style="width: 100%; height: auto;">
+                    <?php endif; ?>
 
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
-              <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div><!-- End Service Item -->
+                    <!-- Menampilkan waktu publikasi -->
+                    <p class="text-muted" style="font-size: 0.85em;">
+                            <?php echo date('d F Y', strtotime($item['waktu_publish'])); ?>
+                    </p>
+                    
+                    <br>
+                    <!-- Judul berita dengan link -->
+                    <h4><a href="path_to_berita/<?php echo $item['slug']; ?>" class="stretched-link"><?php echo $item['judul_berita']; ?></a></h4>
 
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="fas fa-pills icon"></i></div>
-              <h4><a href="" class="stretched-link">Sed ut perspici</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="fas fa-thermometer icon"></i></div>
-              <h4><a href="" class="stretched-link">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="fas fa-dna icon"></i></div>
-              <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-            </div>
-          </div><!-- End Service Item -->
-
+                    <!-- Menampilkan sebagian isi berita -->
+                    <p>
+                        <?php 
+                        if (!empty($item['isi'])) {
+                            // Membersihkan teks dari tag HTML dan memotongnya
+                            $clean_text = strip_tags($item['isi']);
+                            echo (mb_strlen($clean_text) > 150) ? mb_substr($clean_text, 0, 150) . '...' : $clean_text;
+                        }
+                        ?>
+                    </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-
-      </div>
+    </div>
 
     </section><!-- /Featured Services Section -->
 
