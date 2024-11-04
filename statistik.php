@@ -1,226 +1,450 @@
-<?php
-session_start();
-include 'includes/koneksi.php';
+ <?php
 
+    include 'includes/koneksi.php';
+          if(isset($_GET['tahun'])) {
+            $tahun = $_GET['tahun'];
+          } else {
+            $tahun = date('Y');
+          }
 
-if (isset($_POST["submit"])) {
-  # code...
-  $username = $_POST["username"];
-  $password = $_POST["password"];
+          if(isset($_GET['tahun_pemeriksaan'])) {
+            $tahun_pemeriksaan = $_GET['tahun_pemeriksaan'];
+          } else {
+            $tahun_pemeriksaan = date('Y');
+          }
 
+          if(isset($_GET['kode_hewan'])) {
+            $gkode_hewan = $_GET['kode_hewan'];
 
-  $result = mysqli_query($koneksi,"SELECT * FROM tbl_user WHERE username = '$username'");
+            $queryNamaHewan = mysqli_query($koneksi, "SELECT nama_hewan FROM tbl_jenis_hewan WHERE kode_hewan='$gkode_hewan' LIMIT 1");
+            // $result = $mysqli->query($query);
 
-  if (mysqli_num_rows($result) === 1) {
-    # code...
-    $row = mysqli_fetch_assoc($result);
-    if ($password === $row["password"]) {
+            // Ambil kode hewan pertama
+            if ($queryNamaHewan->num_rows > 0) {
+                $rowHewan = $queryNamaHewan->fetch_assoc();
+                $nama_hewan= $rowHewan['nama_hewan'];
+            //     // echo "Kode hewan pertama: " . $kode_hewan_pertama;
+            } else {
+            //     echo "Tidak ada data hewan yang ditemukan.";
+            }
+          } else {
+            $queryKodeHewan = mysqli_query($koneksi, "SELECT tbl_riwayat.kode_hewan, tbl_jenis_hewan.nama_hewan FROM tbl_riwayat JOIN tbl_jenis_hewan ON tbl_riwayat.kode_hewan=tbl_jenis_hewan.kode_hewan ORDER BY id ASC LIMIT 1");
+            // $result = $mysqli->query($query);
 
-      $_SESSION["login"] = true;
-      $_SESSION["username"] = $row["username"];
-
-      header("Location: backend/hitung/");
-      exit;
-    }
-    
-  }
-  $error = true;
-  
-}
-?>
+            // Ambil kode hewan pertama
+            if ($queryKodeHewan->num_rows > 0) {
+                $roww = $queryKodeHewan->fetch_assoc();
+                $nama_hewan= $roww['nama_hewan'];
+                $gkode_hewan= $roww['kode_hewan'];
+            //     // echo "Kode hewan pertama: " . $kode_hewan_pertama;
+            } else {
+            //     echo "Tidak ada data hewan yang ditemukan.";
+            }
+          }
+          ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Puskeswan Banggae</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-
-    <!-- Favicon -->
-        <link href="frontend/img/goat.png" rel="icon" />
-
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Open+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Icon Font Stylesheet -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-
-    <!-- Libraries Stylesheet -->
-    <link href="frontend/lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="frontend/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-    <link href="frontend/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="frontend/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Template Stylesheet -->
-    <link href="frontend/css/style.css" rel="stylesheet" />
-  </head>
+  <?php
+    include 'frontend/components/header.php';
+  ?>
 
   <body>
     <!-- Spinner Start -->
-    <div
-      id="spinner"
-      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-    >
-      <div
-        class="spinner-border text-primary"
-        role="status"
-        style="width: 3rem; height: 3rem"
-      ></div>
-    </div>
+    <?php
+      include 'frontend/components/spinner.php';
+    ?>
     <!-- Spinner End -->
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-0">
-      <div class="row g-0 d-none d-lg-flex">
-        <div class="col-lg-6 ps-5 text-start">
-          <!-- <div class="h-100 d-inline-flex align-items-center text-light">
-            <span>Follow Us:</span>
-            <a class="btn btn-link text-light" href=""
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-            <a class="btn btn-link text-light" href=""
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a class="btn btn-link text-light" href=""
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
-            <a class="btn btn-link text-light" href=""
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div> -->
-        </div>
-        <div class="col-lg-6 text-end">
-          <div
-            class="h-100 bg-secondary d-inline-flex align-items-center text-dark py-2 px-4"
-          >
-          <a href="https://wa.me/6285242809779?text=Hallo%20Dokter,%20Saya%20ingin%20berkonsultasi?" target="_blank">
-            <span class="me-2 fw-semi-bold"><i class="fa fa-phone-alt me-2"></i>Whatsapp:</span>
-            <span>+62 852-4280-9779</span>
-          </a>
-          </div>
-        </div>
-      </div>
-    </div>
+     <?php
+      include 'frontend/components/topbar.php';
+    ?>
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
-    <nav
-      class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 mb-3" style="border-bottom: 2px solid #404A3D;"
-    >
-      <a href="index.php" class="navbar-brand d-flex align-items-center">
-        <h3 class="m-0">Puskeswan Banggae</h3>
-      </a>
-      <button
-        type="button"
-        class="navbar-toggler me-0"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarCollapse"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-          <a href="index.php" class="nav-item nav-link">Home</a>
-          <a href="layanan.php" class="nav-item nav-link">Layanan</a>
-          <a href="layanan.php" class="nav-item nav-link active">Statistik</a>
-        </div>
-        <div class="border-start ps-4 d-none d-lg-block">
-          <a href="login.php" class="nav-item nav-link ">Login</a>
-          <!-- <button type="button" class="btn btn-sm p-0">login</button> -->
-        </div>
-      </div>
-    </nav>
+    <?php
+      include 'frontend/components/navbar.php';
+    ?>
     <!-- Navbar End -->
 
+        <!-- Page Header Start -->
+    <!-- <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-3 text-white mb-4 animated slideInDown">Album Foto</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Galeri</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Album Foto</li>
+                </ol>
+            </nav>
+        </div>
+    </div> -->
+    <!-- Page Header End -->
 
-     <!-- Features Start -->
+
+    <!-- Product Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="section-title bg-white text-start text-primary pe-3">Layanan</p>
-                    <h1 class="mb-4">Sistem Deteksi Penyakit Pada Kambing</h1>
-                    <p class="mb-2">Pilih Gejala (Minimal 5 gejala):</p>
-                    
-                    <form method="post" action="layanan-hasil.php">
-                      <div class="row">
-                        <?php
-                          // Mengambil data dari Tabel Penyakit
-                          $query = mysqli_query($koneksi, "SELECT tbl_gejala.kode_gejala, tbl_gejala.nama_gejala FROM tbl_gejala JOIN tbl_relasi ON tbl_gejala.kode_gejala = tbl_relasi.kode_gejala GROUP BY tbl_gejala.kode_gejala;");
-
-                          $no = 1;
-                          while($data = mysqli_fetch_array($query)) {
-                        ?>
-                          <div class="col-6">
-                            <p><input type="checkbox" style="width:20px;height:20px" class="form-check-input me-2" value="<?= $data['kode_gejala']; ?>" name="gejala[]" id=""><?= $data['kode_gejala']; ?> - <?= $data['nama_gejala']; ?></p>
-                          </div>
-                      <?php 
-                        }
-                      ?>
-                      </div>
-                      
-                      <button type="submit" class="btn btn-secondary rounded-pill py-3 px-5 mt-3" >Diagnosis >></button>
-                    </form>
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <p class="section-title bg-white text-center text-primary px-3">Video Kegiatan</p>
+                <h1 class="mb-5">Lebih dari Sekedar Momen</h1>
+            </div>
+            <div class="row gx-4">
+                <div class="col-12">
+                    <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row">
+                        <div class="card-title">Statistik Pengunjung Online</div>
+                            <div class="card-tools">
+                            
+                            <div class="btn-group dropdown">
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                            >
+                                <span class="btn-label">
+                                <?= $tahun; ?>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                <a class="dropdown-item" href="index.php?tahun=2023">2023</a>
+                                <a class="dropdown-item" href="index.php?tahun=2024">2024</a>
+                                <!-- <a class="dropdown-item" href="index.php?tahun=2025">2025</a> -->
+                                
+                                </li>
+                            </ul>
+                            </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="min-height: 375px">
+                        <canvas id="statisticsChart"></canvas>
+                        </div>
+                        <div id="myChartLegend"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row gx-4">
+                <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-head-row">
+
+                        <div class="card-title">Statistik Pemeriksaan Offline</div>
+                          <div class="card-tools">
+                            <div class="btn-group dropdown">
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm dropdown-toggle"
+                              data-bs-toggle="dropdown"
+                            >
+                              <span class="btn-label">
+                                <?= $tahun_pemeriksaan; ?>
+                              </span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <a class="dropdown-item" href="index.php?tahun_pemeriksaan=2023">2023</a>
+                                <a class="dropdown-item" href="index.php?tahun_pemeriksaan=2024">2024</a>
+                                <!-- <a class="dropdown-item" href="index.php?tahun_pemeriksaan=2025">2025</a> -->
+                                
+                              </li>
+                            </ul>
+                          </div>
+                            <div class="card-tools">
+                            <div class="btn-group dropdown">
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm dropdown-toggle"
+                              data-bs-toggle="dropdown"
+                            >
+                              <span class="btn-label">
+                                <?= $nama_hewan; ?>
+                              </span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li>
+                                <?php
+                                   // Mengambil data dari Tabel Penyakit
+                                $queryHewan = mysqli_query($koneksi, "SELECT * FROM tbl_jenis_hewan");
+                                $no = 1;
+                                while($dataHewan = mysqli_fetch_array($queryHewan)) {
+                                  ?>
+                                <a class="dropdown-item" href="index.php?tahun_pemeriksaan=<?=$tahun_pemeriksaan;?>&kode_hewan=<?= $dataHewan['kode_hewan'];?>"><?= $dataHewan['nama_hewan'];?></a>
+                                  <?php
+                                }
+                                  ?>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="position: relative; height:100px; width: 100%;">
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>
-    <!-- Features End -->
+    <!-- Product End -->
+
+    <!-- end content -->
+
+    <?php
+      include 'frontend/components/footer.php';
+    ?>
+    <!-- Chart JS -->
+    <script src="../../assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <!-- <script src="../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script> -->
+
+    <!-- Chart Circle -->
+    <script src="../../assets/js/plugin/chart-circle/circles.min.js"></script>
+    <?php
+      $warna_hexa = [
+        "#FF5733", // Red-Orange
+        "#33FF57", // Green
+        "#3357FF", // Blue
+        "#FF33A1", // Pink
+        "#FFD133", // Yellow
+        "#33FFF1", // Cyan
+        "#8D33FF", // Purple
+        "#FF6F33", // Orange
+        "#33FF88", // Light Green
+        "#333FFF", // Indigo
+        "#FF33F6", // Magenta
+        "#FFC733", // Gold
+        "#33FFDD", // Aqua
+        "#A133FF", // Violet
+        "#FFB833", // Peach
+        "#33FFA7", // Mint
+        "#5733FF", // Deep Blue
+        "#FF3399", // Hot Pink
+        "#FFFF33", // Bright Yellow
+        "#33FF66"  // Lime Green
+    ];
+
+    // Query untuk mengambil data diagnosis dan nama penyakit
+    $query = "
+        SELECT 
+            d.kode_penyakit, 
+            p.nama_penyakit, 
+            d.tanggal_diagnosis,
+            MONTH(d.tanggal_diagnosis) AS bulan
+        FROM 
+            tbl_statistik_diagnosis d
+        JOIN 
+            tbl_penyakit p 
+        ON 
+            d.kode_penyakit = p.kode_penyakit
+        WHERE 
+            YEAR(d.tanggal_diagnosis) = $tahun
+    ";
+
+    $result = mysqli_query($koneksi, $query);
+
+    // Simpan hasil query ke dalam array yang dikelompokkan per penyakit dan bulan
+    $penyakit_data = [];
+
+    // Inisialisasi array bulan
+    $bulan_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Array untuk menyimpan data penyakit per bulan
+    while ($row = mysqli_fetch_assoc($result)) {
+        $nama_penyakit = $row['nama_penyakit'];
+        $bulan = $row['bulan'];
+
+        // Jika penyakit belum ada di array, inisialisasi
+        if (!isset($penyakit_data[$nama_penyakit])) {
+            $penyakit_data[$nama_penyakit] = array_fill(1, 12, 0); // Isi dengan 12 bulan (mulai dari 1 untuk Jan)
+        }
+
+        // Tambah hitungan di bulan yang sesuai
+        $penyakit_data[$nama_penyakit][$bulan]++;
+    }
 
 
-    <!-- Copyright Start -->
-    <div class="container-fluid bg-secondary text-body copyright py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="fw-semi-bold" href="#">Puskeswan Banggae</a>, All
-            Right Reserved.
-          </div>
-          <div class="col-md-6 text-center text-md-end">
-            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-            <!-- Designed By -->
-            <!-- <a class="fw-semi-bold" href="https://htmlcodex.com">HTML Codex</a> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Copyright End -->
 
-    <!-- Back to Top -->
-    <a
-      href="#"
-      class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
-      ><i class="bi bi-arrow-up"></i
-    ></a>
+    // Inisialisasi array untuk datasets
+    $datasets = [];
+    $penyakit_labels = [];
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="frontend/lib/wow/wow.min.js"></script>
-    <script src="frontend/lib/easing/easing.min.js"></script>
-    <script src="frontend/lib/waypoints/waypoints.min.js"></script>
-    <script src="frontend/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="frontend/lib/counterup/counterup.min.js"></script>
-    <script src="frontend/lib/parallax/parallax.min.js"></script>
-    <script src="frontend/lib/lightbox/js/lightbox.min.js"></script>
+    // Proses data penyakit ke dalam format datasets
+    foreach ($penyakit_data as $nama_penyakit => $data_per_bulan) {
+        // Simpan penyakit sebagai label
+        $penyakit_labels[] = $nama_penyakit;
+        
+        // Siapkan dataset untuk penyakit tersebut
+        $datasets[] = [
+            'label' => $nama_penyakit,
+            'borderColor' => $warna_hexa[count($datasets) % count($warna_hexa)], // Pilih warna hexa berdasarkan indeks
+            'pointRadius' => 0,
+            'legendColor' => $warna_hexa[count($datasets) % count($warna_hexa)],
+            'fill' => false,
+            'borderWidth' => 2,
+            'data' => array_values($data_per_bulan) // Data jumlah penyakit per bulan
+        ];
+    }
 
-    <!-- Template Javascript -->
-    <script src="frontend/js/main.js"></script>
+        // Query untuk mengambil data penyakit dan hewan
+    $queryRiwayat = "SELECT jp.nama_penyakit, jh.nama_hewan,  COUNT(*) as total_pemeriksaan
+                      FROM tbl_riwayat r
+                      JOIN tbl_jenis_hewan jh ON r.kode_hewan = jh.kode_hewan
+                      JOIN tbl_jenis_penyakit jp ON r.kode_penyakit = jp.kode_penyakit
+                      WHERE YEAR(r.tgl_pemeriksaan) = $tahun_pemeriksaan
+                      AND r.kode_hewan = '$gkode_hewan'
+                      GROUP BY jp.nama_penyakit, jh.nama_hewan";
+    $resultRiwayat =  mysqli_query($koneksi, $queryRiwayat);
+
+    // Inisialisasi array untuk label (penyakit) dan datasets (hewan)
+    $nama_penyakit = [];
+    $nama_hewan = [];
+    $total_pemeriksaan = [];
+
+    while($row = $resultRiwayat->fetch_assoc()) {
+        $nama_penyakit[] = $row['nama_penyakit'];
+        $nama_hewan = $row['nama_hewan'];
+        $total_pemeriksaan[] = $row['total_pemeriksaan'];
+    }
+
+    // Encode arrays into JSON for use in JavaScript
+    $nama_penyakit_json = json_encode($nama_penyakit);
+    $nama_hewan_json = json_encode($nama_hewan);
+    $total_pemeriksaan_json = json_encode($total_pemeriksaan);
+
+
+    ?>
+    <script>
+
+      //Chart
+
+      var ctx = document.getElementById('statisticsChart').getContext('2d');
+
+      var statisticsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets:  <?php echo json_encode($datasets); ?>
+        },
+        options : {
+          responsive: true, 
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          tooltips: {
+            bodySpacing: 4,
+            mode:"nearest",
+            intersect: 0,
+            position:"nearest",
+            xPadding:10,
+            yPadding:10,
+            caretPadding:10
+          },
+          layout:{
+            padding:{left:5,right:5,top:15,bottom:15}
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                fontStyle: "500",
+                beginAtZero: false,
+                maxTicksLimit: 5,
+                padding: 10
+              },
+              gridLines: {
+                drawTicks: false,
+                display: false
+              }
+            }],
+            xAxes: [{
+              gridLines: {
+                zeroLineColor: "transparent"
+              },
+              ticks: {
+                padding: 10,
+                fontStyle: "500"
+              }
+            }]
+          }, 
+          legendCallback: function(chart) { 
+            var text = []; 
+            text.push('<ul class="' + chart.id + '-legend html-legend">'); 
+            for (var i = 0; i < chart.data.datasets.length; i++) { 
+              text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>'); 
+              if (chart.data.datasets[i].label) { 
+                text.push(chart.data.datasets[i].label); 
+              } 
+              text.push('</li>'); 
+            } 
+            text.push('</ul>'); 
+            return text.join(''); 
+          }  
+        }
+      });
+
+      //  // Data dari PHP (labels dan datasets dinamis)
+    
+
+      var colors = <?php echo json_encode($warna_hexa); ?>;  // Ambil array warna dari PHP
+
+      
+      var myLegendContainer = document.getElementById("myChartLegend");
+
+      var barChart = document.getElementById("barChart").getContext("2d");
+      var myBarChart = new Chart(barChart, {
+        type: "bar",
+        data: {
+          labels: <?php echo $nama_penyakit_json; ?>,
+          datasets: [{
+                    label: <?php echo $nama_hewan_json; ?>,
+                    data: <?php echo $total_pemeriksaan_json; ?>,  // Total pemeriksaan sebagai data
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  autoSkip: false, // Menonaktifkan auto-skip agar semua label tampil
+                },
+              },
+            ],
+            xAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                },
+              }],
+          },
+        },
+      });
+
+      // generate HTML legend
+      myLegendContainer.innerHTML = statisticsChart.generateLegend();
+
+      // bind onClick event to all LI-tags of the legend
+      var legendItems = myLegendContainer.getElementsByTagName('li');
+      for (var i = 0; i < legendItems.length; i += 1) {
+        legendItems[i].addEventListener("click", legendClickCallback, false);
+      }
+    </script>
   </body>
 </html>
+

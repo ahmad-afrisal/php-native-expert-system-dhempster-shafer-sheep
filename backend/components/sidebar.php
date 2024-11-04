@@ -106,10 +106,10 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item <?= ($active == 'penyakit' || $active == 'hitung' || $active == 'gejala' || $active == 'relasi')? 'active submenu' : ''; ?>"> 
+              <li class="nav-item <?= ($active == 'berita' || $active == 'foto' || $active == 'video' || $active == 'dokter' || $active == 'pengumuman')? 'active submenu' : ''; ?>"> 
                 <a data-bs-toggle="collapse" href="#profil">
                   <!-- <i class="fas fa-table"></i> -->
-                  <i class="fas fa-database"></i>
+                  <i class="fas fa-layer-group"></i>
                   <p>Profil</p>
                   <span class="caret"></span>
                 </a>
@@ -135,9 +135,9 @@
                         <span class="sub-item">Dokter</span>
                       </a>
                     </li>
-                    <li class="<?= $active == 'hitung' ? 'active' : ''; ?>">
-                      <a href="../hitung/index.php">
-                        <span class="sub-item">Diagnosis</span>
+                    <li class="<?= $active == 'pengumuman' ? 'active' : ''; ?>">
+                      <a href="../pengumuman/index.php">
+                        <span class="sub-item">Pengumuman</span>
                       </a>
                     </li>
                   </ul>
